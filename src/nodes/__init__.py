@@ -1,3 +1,4 @@
+from .node import Node
 from .number import Number
 from .symbol import Symbol
 from .binary_op import Add, Subtract, Multiply, Divide, Power 

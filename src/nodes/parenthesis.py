@@ -1,4 +1,4 @@
-from node import Node
+from .node import Node
 
 class Parenthesis(Node):
     def __init__(self, expr):
