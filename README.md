@@ -1,2 +1,2 @@
 # fep
-Flexible Expression Parser
+Flexible Mathematical Expression Parser.
