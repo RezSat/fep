@@ -21,4 +21,74 @@ class Tokenier:
     def tokenize(self) -> list:
         c = ""
         tokens = []
-        pass
+        while self.source:
+            match = re.match(Function, self.source)
+            if match:
+                value = match.group()[:-1]
+                tokens.append(Token(value,"Function", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+            
+            match = re.match(ComplexNumber, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "ComplexNumber", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+            match = re.match(Hexnumber, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "HexaDecimalNumber", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+            match = re.match(Binnumber, self.source)
+            if match:
+                value = match.group()
+                token.append(Token(value, 'BinaryNumber', "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+            match = re.match(Octnumber, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "OctalNumber", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+            
+            match = re.match(Number, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "Number", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+            match = re.match(Word, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "Word", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+    
+            match = re.match(Symbol, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, "Symbol", "Operand"))
+                self.source = self.source[len(value):]
+                continue
+
+            match = re.match(Operator, self.source)
+            if match:
+                value = match.group()
+                tokens.append(Token(value, Patterns.operators[value], "Operator"))
+                self.source = self.source[len(value):]
+                continue
+
+            if self.source[0].isspace():
+                self.source = self.source[1:]
+                continue
+
+            raise ValueError(f"Invalid character: {self.source[0]}")
+        return tokens
