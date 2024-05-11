@@ -27,4 +27,5 @@ class Number(Node):
     def __float__(self):
         return float(self.value)
 
-    
+    def __repr__(self):
+        return str({"Number": self.value})
