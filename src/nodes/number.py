@@ -11,14 +11,20 @@ class Number(Node):
         return False
 
     @property 
+    def is_notation_exponential(self):
+        if 'e' in self.value:
+            return True
+        return False
+
     def to_dict(self):
         return {
             "Number": self.value
         }
 
-    @property 
     def to_latex(self):
         return '\\mathtt{' + self.value + '}'
 
     def __float__(self):
-        return float(self._as_decimal())
+        return float(self.value)
+
+    
