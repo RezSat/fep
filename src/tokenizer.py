@@ -8,13 +8,14 @@ class Token:
         self._type = _type
 
     def __repr__(self):
-        return {
+        return str({
             "Value": self.value,
             "Name": self.name,
             "Type": self._type
-        }
+        })
+    
 
-class Tokenier:
+class Tokenizer:
     def __init__(self, source: str):
         self.source = source
     
@@ -82,7 +83,7 @@ class Tokenier:
             match = re.match(Operator, self.source)
             if match:
                 value = match.group()
-                tokens.append(Token(value, Patterns.operators[value], "Operator"))
+                tokens.append(Token(value, Operators[value], "Operator"))
                 self.source = self.source[len(value):]
                 continue
 

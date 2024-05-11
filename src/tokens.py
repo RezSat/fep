@@ -16,7 +16,7 @@ Operators = {
     ";": "SemiColon",
     ",": "Comma"
 }
-Word - r'\w{2,}'
+Word = r'\w{2,}'
 Function = r'[a-zA-Z]+\(' # TODO: add support for greek characters and all 
 ComplexNumber = r'([0-9](?:_?[0-9])*[iI]|(([0-9](?:_?[0-9])*\.(?:[0-9](?:_?[0-9])*)?|\.[0-9](?:_?[0-9])*)([eE][-+]?[0-9](?:_?[0-9])*)?|[0-9](?:_?[0-9])*[eE][-+]?[0-9](?:_?[0-9])*)[iI])'
 Hexnumber = r'0[xX](?:_?[0-9a-fA-F])+'
