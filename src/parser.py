@@ -4,7 +4,6 @@ from tokens import Keywords
 TODO:
 parenthesis means multiplication ( well sometimes )
 statement separation
-variable assignments
 equation
 inequality
 
@@ -27,7 +26,11 @@ class Parser:
             self.current_token = None
 
     def parse(self):
-        node = self.parse_expression() 
+        node = self.parse_expression()
+        # fix errors like let x = 4x = 6 -> {'Equation': {'Left': {'Variable': 'x', 'Value': {'BinaryOperation': '*', 'Left': {'Number': '4'}, 'Right': {'Symbol': 'x'}}}, 'Right': None}}
+        if self.current_token != None and self.current_token.value == "=":
+            right = self.parse_expression()
+            return Equation(node, right)
         return node
 
     def parse_expression(self):

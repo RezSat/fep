@@ -7,6 +7,7 @@ from .parenthesis import Parenthesis
 from .function_definition import FunctionDefinition
 from .function_call import FunctionCall
 from .assignment import VariableAssignment
+from .equation import Equation
 
 __all__ = [
     'Node',
@@ -23,4 +24,5 @@ __all__ = [
     'FunctionDefinition',
     'FunctionCall',
     'VariableAssignment',
+    'Equation'
 ]
