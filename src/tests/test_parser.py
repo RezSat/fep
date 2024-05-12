@@ -5,7 +5,7 @@ sys.path.append('/home/rezsat/Documents/github/fep/src')
 from tokenizer import Tokenizer
 from parser import Parser
 
-expr = "2+4"
+expr = input(">> ")
 tokens = Tokenizer(expr).tokenize()
 parser = Parser(tokens)
 ast = parser.parse()

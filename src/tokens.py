@@ -24,4 +24,6 @@ Binnumber = r'0[bB](?:_?[01])+'
 Octnumber = r'0[oO](?:_?[0-7])+'
 
 # Keywords that the libary supports
-Keywords = ['let']
+Keywords = {
+    "let": "parse_variable_assignment",
+}

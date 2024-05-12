@@ -4,6 +4,9 @@ from .symbol import Symbol
 from .binary_op import Add, Subtract, Multiply, Divide, Power 
 from .unary_op import Positive, Negative
 from .parenthesis import Parenthesis
+from .function_definition import FunctionDefinition
+from .function_call import FunctionCall
+from .assignment import VariableAssignment
 
 __all__ = [
     'Node',
@@ -16,5 +19,8 @@ __all__ = [
     'Power',
     'Positive',
     'Negative',
-    'Parenthesis'
+    'Parenthesis',
+    'FunctionDefinition',
+    'FunctionCall',
+    'VariableAssignment',
 ]
