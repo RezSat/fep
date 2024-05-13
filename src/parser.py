@@ -2,9 +2,8 @@ from nodes import *
 from tokens import Keywords
 """
 TODO:
-parenthesis means multiplication ( well sometimes )
+we don't allow this -> parenthesis means multiplication (because of how the functions are there but if we fix the tokenization process this might can be allowed)
 statement separation
-equation
 inequality
 
 data-strctures:
@@ -27,7 +26,7 @@ class Parser:
 
     def parse(self):
         node = self.parse_expression()
-        # fix errors like let x = 4x = 6 -> {'Equation': {'Left': {'Variable': 'x', 'Value': {'BinaryOperation': '*', 'Left': {'Number': '4'}, 'Right': {'Symbol': 'x'}}}, 'Right': None}}
+        # fix or handle errors like let x = 4x = 6 -> {'Equation': {'Left': {'Variable': 'x', 'Value': {'BinaryOperation': '*', 'Left': {'Number': '4'}, 'Right': {'Symbol': 'x'}}}, 'Right': None}}
         if self.current_token != None and self.current_token.value == "=":
             right = self.parse_expression()
             return Equation(node, right)
