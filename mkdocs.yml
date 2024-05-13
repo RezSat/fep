@@ -1,7 +1,7 @@
 site_name: FEP Documentation
 theme:
-  palette: 
-
+  name: material
+  palette:
     # Palette toggle for light mode
     - scheme: default
       toggle:
@@ -13,3 +13,4 @@ theme:
       toggle:
         icon: material/brightness-4
         name: Switch to light mode
+

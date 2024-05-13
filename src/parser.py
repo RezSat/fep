@@ -3,8 +3,8 @@ from tokens import Keywords
 """
 TODO:
 we don't allow this -> parenthesis means multiplication (because of how the functions are there but if we fix the tokenization process this might can be allowed)
-statement separation
-inequality
+if-conditions ( or similar)
+loops (similar/exact to while and for)
 
 data-strctures:
     matrices
@@ -25,12 +25,27 @@ class Parser:
             self.current_token = None
 
     def parse(self):
-        node = self.parse_expression()
-        # fix or handle errors like let x = 4x = 6 -> {'Equation': {'Left': {'Variable': 'x', 'Value': {'BinaryOperation': '*', 'Left': {'Number': '4'}, 'Right': {'Symbol': 'x'}}}, 'Right': None}}
-        if self.current_token != None and self.current_token.value == "=":
-            right = self.parse_expression()
-            return Equation(node, right)
-        return node
+        statements = []
+        while self.current_token is not None:
+            node = self.parse_expression()
+            # fix or handle errors like let x = 4x = 6 -> {'Equation': {'Left': {'Variable': 'x', 'Value': {'BinaryOperation': '*', 'Left': {'Number': '4'}, 'Right': {'Symbol': 'x'}}}, 'Right': None}}
+            if self.current_token != None and self.current_token.value == "=":
+                self.advance()
+                right = self.parse_expression()
+                statements.append(Equation(node, right))
+            elif self.current_token != None and self.current_token.value in ("<", ">", "!=", ">=", "<="):
+                op = self.current_token.value
+                self.advance()
+                right = self.parse_expression()
+                statements.append(Inequality(node, op, right))
+            else:
+                statements.append(node)
+
+            if self.current_token != None and self.current_token.value == ';':
+                self.advance()
+            else:
+                break
+        return statements
 
     def parse_expression(self):
         node = self.parse_term()
@@ -82,10 +97,11 @@ class Parser:
 
         elif self.current_token.name == "Function":
             node = self.parse_function_define()
-        
+            
         return self.parse_power(node)
     
     def parse_power(self, node):
+        # Issue maybe should change the Function token name, since its there there is really no use of having a separate function-call parse functions as it is being parsed from the function-define anyways, but since functin-call shoul have higher precendence i should handle them differently, so instead of separating that in the lexing state it should be handle while parsing.
         if self.current_token != None and self.current_token.value == "^":
             op = self.current_token.value
             operator_ = globals()[self.current_token.name]
@@ -107,7 +123,6 @@ class Parser:
                 while self.current_token.value == ',':
                     self.advance()
                     arguments.append(self.parse_factor())
-
                 if self.current_token != None and self.current_token.value == ')':
                     self.advance()
                     return FunctionCall(func_name, arguments)
@@ -122,7 +137,7 @@ class Parser:
             if self.current_token.value == "(":
                 self.advance()
                 arguments = []
-                if self.current_token.name in ("Symbol", "Word"):
+                if self.current_token.name in ("Symbol", "Word", "Number"):
                     arguments.append(self.current_token)
                     self.advance()
 

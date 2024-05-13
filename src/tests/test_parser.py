@@ -5,8 +5,11 @@ sys.path.append('/home/rezsat/Documents/github/fep/src')
 from tokenizer import Tokenizer
 from parser import Parser
 
-expr = input(">> ")
+expr = input(".>> ")
 tokens = Tokenizer(expr).tokenize()
+print(tokens)
+
+print('\n\n')
 parser = Parser(tokens)
 ast = parser.parse()
 print(ast)
