@@ -5,7 +5,15 @@ TODO:
 we don't allow this -> parenthesis means multiplication (because of how the functions are there but if we fix the tokenization process this might can be allowed)
 if-conditions ( or similar)
 loops (similar/exact to while and for)
+handle implicit multiplication and division properly
+handle hexadecimal, binary and octal
+handle complex numbers
 
+bitwise operators
+
+parse : 'A[1,2] = 4'
+
+maybe take all assignments to one place like variable assignments, matrix assignments and function assignments
 data-strctures:
     matrices
     hash-maps/dicts
@@ -79,6 +87,14 @@ class Parser:
                 node = Parenthesis(node)
             else:
                 SyntaxError("Parenthesis Missing or Mismatch Error: expected `)`")
+
+        elif self.current_token.value == "+":
+            self.advance()
+            node = Positive(value=self.parse_factor())
+
+        elif self.current_token.value == "-":
+            self.advance()
+            node = Negative(value=self.parse_factor())
 
         elif self.current_token.name == "Number":
             node = Number(self.current_token.value)

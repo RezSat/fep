@@ -3,8 +3,8 @@
 
 Number = r'(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?'
 Symbol = r'[a-zA-Z]' # TODO: add support for greek characters and all 
-Operator = r'[+\-*/^=/(\);,><!]+' # supported operators if any added, edit the below list as welll
-Operators = {
+OneOperator = r'[+\-*/^=/(\);,><!]' # supported operators if any added, edit the below list as welll
+OneOperators = {
     "+": "Add",
     "-": "Subtract",
     "*": "Multiply",
@@ -16,12 +16,22 @@ Operators = {
     ";": "SemiColon",
     ",": "Comma",
     '>': 'GreaterThan',
-    '>=': 'GTEQ',
     '<': 'LessThan',
-    '<=': 'LTEQ',
-    '!=': 'NotEqual',
-    '==': 'EQEQ',
     "!": 'Factorial'
+}
+
+TwoOperator = {
+    ">": r'>=',
+    "<": r"<=",
+    "!": r"!=",
+    "=": r"=="
+}
+
+TwoOperators = {
+    ">=": "GTEQ",
+    "<=": "LTEQ",
+    "!=": "NOTEQ",
+    "==": "EQEQ"
 }
 Word = r'\w{2,}'
 Function = r'[a-zA-Z]+\(' # TODO: add support for greek characters and all 

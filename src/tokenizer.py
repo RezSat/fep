@@ -80,12 +80,23 @@ class Tokenizer:
                 self.source = self.source[len(value):]
                 continue
 
-            match = re.match(Operator, self.source)
+            match = re.match(OneOperator, self.source)
             if match:
                 value = match.group()
-                tokens.append(Token(value, Operators[value], "Operator"))
-                self.source = self.source[len(value):]
-                continue
+                if value in TwoOperator.keys():
+                    if match := re.match(TwoOperator[value], self.source):
+                        value = match.group()
+                        tokens.append(Token(value, TwoOperators[value], "Operator"))
+                        self.source = self.source[len(value):]
+                        continue
+                    else:
+                        tokens.append(Token(value, OneOperators[value], "Operator"))
+                        self.source = self.source[len(value):]
+                        continue
+                else:
+                    tokens.append(Token(value, OneOperators[value], "Operator"))
+                    self.source = self.source[len(value):]
+                    continue
 
             if self.source[0].isspace():
                 self.source = self.source[1:]
