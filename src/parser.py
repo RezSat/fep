@@ -8,16 +8,20 @@ loops (similar/exact to while and for)
 handle implicit multiplication and division properly
 handle hexadecimal, binary and octal
 handle complex numbers
-
 bitwise operators
-
+handle underscores on variables, function names so that subscript can be done from front_end.
 parse : 'A[1,2] = 4'
-
+factorial
+x′ - complement operators ( not sure if need right now )
 maybe take all assignments to one place like variable assignments, matrix assignments and function assignments
 data-strctures:
     matrices
     hash-maps/dicts
     sets
+
+# not sure if needed, but we can use arrows (`->`) for mapping, variable assigning or somthing similar to that
+
+handle different other unicode characters
 
 more later
 """
@@ -25,6 +29,8 @@ class Parser:
     def __init__(self, tokens: list):
         self.tokens = iter(tokens)
         self.current_token = next(self.tokens)
+        self.lbar_open = 0
+        self.lbar_close = 0
 
     def advance(self):
         try:
@@ -72,7 +78,7 @@ class Parser:
             operator_ = globals()[self.current_token.name]
             self.advance()
             right = self.parse_factor()
-            node = operator_(left=node, right=node)
+            node = operator_(left=node, right=right)
         
         return node
 
@@ -88,6 +94,15 @@ class Parser:
             else:
                 SyntaxError("Parenthesis Missing or Mismatch Error: expected `)`")
 
+        elif self.current_token.value == "|":
+            self.advance()
+            node = self.parse_expression()
+            if self.current_token != None and self.current_token.value == "|":
+                self.advance()
+                node = Modulus(node)
+            else:
+                SyntaxError("Mismatached Modulus operator: expected : `|`")
+
         elif self.current_token.value == "+":
             self.advance()
             node = Positive(value=self.parse_factor())
@@ -95,6 +110,7 @@ class Parser:
         elif self.current_token.value == "-":
             self.advance()
             node = Negative(value=self.parse_factor())
+        
 
         elif self.current_token.name == "Number":
             node = Number(self.current_token.value)
@@ -196,3 +212,5 @@ class Parser:
             expr = self.parse_expression()
 
             return VariableAssignment(var_name, expr)
+
+

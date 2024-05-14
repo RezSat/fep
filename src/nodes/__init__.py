@@ -9,6 +9,10 @@ from .function_call import FunctionCall
 from .assignment import VariableAssignment
 from .equation import Equation
 from .inequality import Inequality
+from .matrix import Matrix
+from .vector import Vector
+from .set import Set
+from .modulus import Modulus
 
 __all__ = [
     'Node',
@@ -27,4 +31,8 @@ __all__ = [
     'VariableAssignment',
     'Equation',
     'Inequality',
+    'Matrix',
+    'Vector',
+    'Set',
+    'Modulus',
 ]
