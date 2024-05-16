@@ -13,6 +13,10 @@ from .matrix import Matrix
 from .vector import Vector
 from .set import Set
 from .modulus import Modulus
+from .complexnumber import ComplexNumber
+from .hexadecimalnumber import HexaDecimalNumber
+from .octalnumber import OctalNumber
+from .binarynumber import BinaryNumber
 
 __all__ = [
     'Node',
@@ -35,4 +39,8 @@ __all__ = [
     'Vector',
     'Set',
     'Modulus',
+    'ComplexNumber',
+    'HexaDecimalNumber',
+    'OctalNumber',
+    'BinaryNumber',
 ]

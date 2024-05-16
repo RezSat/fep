@@ -1,0 +1,10 @@
+from .node import Node
+
+class BinaryNumber(Node):
+    def __init__(self, value):
+        self.value = value
+
+    def __repr__(self):
+        return str({
+            "BinaryNumber": {self.value}
+        })

@@ -47,7 +47,7 @@ class Tokenizer:
             match = re.match(Binnumber, self.source)
             if match:
                 value = match.group()
-                token.append(Token(value, 'BinaryNumber', "Operand"))
+                tokens.append(Token(value, 'BinaryNumber', "Operand"))
                 self.source = self.source[len(value):]
                 continue
 

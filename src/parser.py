@@ -6,10 +6,11 @@ we don't allow this -> parenthesis means multiplication (because of how the func
 if-conditions ( or similar)
 loops (similar/exact to while and for)
 handle implicit multiplication and division properly
-handle hexadecimal, binary and octal
-handle complex numbers
+
+
 bitwise operators
 handle underscores on variables, function names so that subscript can be done from front_end.
+handle complexnumbers
 parse : 'A[1,2] = 4'
 factorial
 x′ - complement operators ( not sure if need right now )
@@ -111,6 +112,17 @@ class Parser:
             self.advance()
             node = Negative(value=self.parse_factor())
         
+        elif self.current_token.name == "ComplexNumber":
+            node = ComplexNumber(self.current_token.value)
+
+        elif self.current_token.name == "HexaDecimalNumber":
+            node = HexaDecimalNumber(self.current_token.value)
+
+        elif self.current_token.name == "OctalNumber":
+            node = OctalNumber(self.current_token.value)
+
+        elif self.current_token.name == "BinaryNumber":
+            node = BinaryNumber(self.current_token.value)
 
         elif self.current_token.name == "Number":
             node = Number(self.current_token.value)
