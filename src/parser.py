@@ -141,7 +141,13 @@ class Parser:
             elif self.current_token != None and self.current_token.value == "%":
                 node = Percentage(node)
                 self.advance()
-
+            elif self.current_token != None and self.current_token.value == "!":
+                self.advance()
+                if '.' in node.value or '-' in node.value:
+                    raise SyntaxError("Factorial is only for positive whole numbers")
+                else:
+                    node = Factorial(node)
+                
         elif self.current_token.name in ("Symbol", "Word"):
             if self.current_token.value in Keywords:
                 parse_method = getattr(self,Keywords[self.current_token.value])
