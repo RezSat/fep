@@ -6,7 +6,7 @@ from .unary_op import Positive, Negative
 from .parenthesis import Parenthesis
 from .function_definition import FunctionDefinition
 from .function_call import FunctionCall
-from .assignment import VariableAssignment
+from .assignment import VariableAssignment, MatrixAssignment
 from .equation import Equation
 from .inequality import Inequality
 from .matrix import Matrix
@@ -33,6 +33,7 @@ __all__ = [
     'FunctionDefinition',
     'FunctionCall',
     'VariableAssignment',
+    'MatrixAssignment',
     'Equation',
     'Inequality',
     'Matrix',

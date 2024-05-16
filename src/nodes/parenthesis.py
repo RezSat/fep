@@ -5,4 +5,6 @@ class Parenthesis(Node):
         self.expr = expr
 
     def __repr__(self):
-        return f"( {self.expr} )"
+        return str({
+            "Parenthesis": self.expr
+        })

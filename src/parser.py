@@ -1,44 +1,32 @@
 from nodes import *
 from tokens import Keywords
-"""
-TODO:
-we don't allow this -> parenthesis means multiplication (because of how the functions are there but if we fix the tokenization process this might can be allowed)
-if-conditions ( or similar)
-loops (similar/exact to while and for)
-handle implicit multiplication and division properly
 
-mixed numbers
-fractions 
-squareroots/nth root
-polynomial terms - coefficents like this: (3+2x)x^2
-bitwise operators
-handle underscores on variables, function names so that subscript can be done from front_end.
-
-parse : 'A[1,2] = 4'
-factorial
-x′ - complement operators ( not sure if need right now )
-maybe take all assignments to one place like variable assignments, matrix assignments and function assignments
-data-strctures:
-    hash-maps/dicts
-    sets
-
-# not sure if needed, but we can use arrows (`->`) for mapping, variable assigning or somthing similar to that
-
-handle different other unicode characters
-
-more later
-"""
 class Parser:
     def __init__(self, tokens: list):
-        self.tokens = iter(tokens)
-        self.current_token = next(self.tokens)
+        self.tokens = tokens
+        self.i = 0
+        self.current_token = self.tokens[self.i]
         self.lbar_open = 0
         self.lbar_close = 0
 
-    def advance(self):
+    def advance(self, offset=0):
         try:
-            self.current_token = next(self.tokens)
-        except StopIteration:
+            self.i += 1 + offset
+            self.current_token = self.tokens[self.i]
+        except IndexError:
+            self.current_token = None
+
+    def peek(self, offset=0):
+        try:
+            return self.tokens[self.i + offset]
+        except IndexError:
+            return None
+
+    def reverse(self, offset=0):
+        try:
+            self.i -= 1 + offset
+            self.current_token = self.tokens[self.i]
+        except IndexError:
             self.current_token = None
 
     def parse(self):
@@ -87,13 +75,15 @@ class Parser:
 
     def parse_factor(self):
         node = None
-
+        
         if self.current_token.value == "(":
             self.advance()
             node = self.parse_expression()
-            if self.current_token != None and self.current_token.value != ")":
+            
+            if self.current_token != None and self.current_token.value == ")":        
                 self.advance()
                 node = Parenthesis(node)
+                
             else:
                 SyntaxError("Parenthesis Missing or Mismatch Error: expected `)`")
 
@@ -153,11 +143,17 @@ class Parser:
             if self.current_token.value in Keywords:
                 parse_method = getattr(self,Keywords[self.current_token.value])
                 node = parse_method()
+            elif self.peek(1).value == '[':
+                node = self.parse_matrix_assignment()
             else:
                 node = Symbol(self.current_token.value)
                 self.advance()
 
         elif self.current_token.name == "Function":
+            # the idea is to find the closing paren and the equals sign and if the distance t closing paren to the equal is 1: then its a function definition otherwise its a function call.
+            # start_index = self.i,
+            # self.tokens.index(')', start=self.i) - self.tokens.index('=', self.i) must to 1
+
             node = self.parse_function_define()
             
         return self.parse_power(node)
@@ -220,6 +216,7 @@ class Parser:
                     node = FunctionDefinition(func_name, arguments, body)
                     return node
                 else:
+                    #self.reverse(offset=6)
                     node = FunctionCall(func_name, arguments)
                     return node
     
@@ -242,5 +239,39 @@ class Parser:
             expr = self.parse_expression()
 
             return VariableAssignment(var_name, expr)
+
+    def parse_matrix_assignment(self):
+        # this and MatrixAssignment class needed to handle really correctly as there are rows and also columns, but for now just parsing this so this works anyways
+        matrix_name = self.current_token.value
+        n = 0
+        m = None
+        value = None
+        self.advance()
+        if self.current_token != None and self.current_token.value == '[':
+            self.advance()
+            n = self.parse_expression() #maybe parse_term, or even parse_factor i have no idea yet.
+            if self.current_token == None:
+                raise SyntaxError('Something is missing: `]` or `,` expected')
+
+            if self.current_token.value == ",":
+                self.advance()
+                m = self.parse_expression() # same here as well, just like the n
+
+            if self.current_token != None and self.current_token.value == ']':
+                self.advance()
+            else:
+                raise SyntaxError('Something is missing: `]` expected')
+
+            if self.current_token != None and self.current_token.value == '=':
+                self.advance()
+                value = self.parse_expression() # this one right i think.
+            else:
+                raise SyntaxError('No value specified')
+
+        return MatrixAssignment(matrix_name, value, n, m)
+
+
+
+            
 
 
