@@ -7,16 +7,18 @@ if-conditions ( or similar)
 loops (similar/exact to while and for)
 handle implicit multiplication and division properly
 
-
+mixed numbers
+fractions 
+squareroots/nth root
+polynomial terms - coefficents like this: (3+2x)x^2
 bitwise operators
 handle underscores on variables, function names so that subscript can be done from front_end.
-handle complexnumbers
+
 parse : 'A[1,2] = 4'
 factorial
 x′ - complement operators ( not sure if need right now )
 maybe take all assignments to one place like variable assignments, matrix assignments and function assignments
 data-strctures:
-    matrices
     hash-maps/dicts
     sets
 
@@ -94,6 +96,22 @@ class Parser:
                 node = Parenthesis(node)
             else:
                 SyntaxError("Parenthesis Missing or Mismatch Error: expected `)`")
+
+        elif self.current_token.value == '[':
+            self.advance()
+            elements = []
+            while self.current_token != None and self.current_token.value != ']':
+                element = self.parse_expression()
+                elements.append(element)
+                if self.current_token == None:
+                    raise SyntaxError("Missing closing ']' for matrix")
+                elif self.current_token.value == ',':
+                    self.advance()
+            if self.current_token == None or self.current_token.value != ']':
+                raise SyntaxError("Missing closing ']' for matrix")
+
+            self.advance()
+            node = Matrix(elements)
 
         elif self.current_token.value == "|":
             self.advance()

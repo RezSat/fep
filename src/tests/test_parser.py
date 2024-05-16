@@ -6,6 +6,11 @@ from tokenizer import Tokenizer
 from parser import Parser
 
 expr = input(".>> ")
+expr = """
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+"""
 tokens = Tokenizer(expr).tokenize()
 print(tokens)
 
