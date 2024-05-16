@@ -3,7 +3,7 @@
 
 Number = r'(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?'
 Symbol = r'[a-zA-Z]' # TODO: add support for greek characters and all 
-OneOperator = r'[+\-*/^=/(\);,><!|[\]]' # supported operators if any added, edit the below list as welll
+OneOperator = r'[+\-*/^=/(\);,><!|[\]%]' # supported operators if any added, edit the below list as welll
 OneOperators = {
     "+": "Add",
     "-": "Subtract",
@@ -21,6 +21,7 @@ OneOperators = {
     "|": 'LBar',
     '[': 'LBracket',
     ']': 'RBracket',
+    '%': 'Percentage',
 }
 
 TwoOperator = {

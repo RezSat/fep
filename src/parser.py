@@ -86,7 +86,7 @@ class Parser:
                 
             else:
                 SyntaxError("Parenthesis Missing or Mismatch Error: expected `)`")
-
+        
         elif self.current_token.value == '[':
             self.advance()
             elements = []
@@ -138,6 +138,9 @@ class Parser:
             if self.current_token != None and self.current_token.name == "Symbol":
                 node = Multiply(left=node, right=Symbol(self.current_token.value))
                 self.advance()
+            elif self.current_token != None and self.current_token.value == "%":
+                node = Percentage(node)
+                self.advance()
 
         elif self.current_token.name in ("Symbol", "Word"):
             if self.current_token.value in Keywords:
@@ -155,7 +158,8 @@ class Parser:
             # self.tokens.index(')', start=self.i) - self.tokens.index('=', self.i) must to 1
 
             node = self.parse_function_define()
-            
+
+                   
         return self.parse_power(node)
     
     def parse_power(self, node):

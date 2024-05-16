@@ -17,6 +17,7 @@ from .complexnumber import ComplexNumber
 from .hexadecimalnumber import HexaDecimalNumber
 from .octalnumber import OctalNumber
 from .binarynumber import BinaryNumber
+from .percentage import Percentage
 
 __all__ = [
     'Node',
@@ -44,4 +45,5 @@ __all__ = [
     'HexaDecimalNumber',
     'OctalNumber',
     'BinaryNumber',
+    'Percentage',
 ]
