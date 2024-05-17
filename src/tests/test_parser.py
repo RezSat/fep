@@ -3,7 +3,7 @@ import sys
 sys.path.append('/home/rezsat/Documents/github/fep/src')
 
 from tokenizer import Tokenizer
-from parser import Parser
+from parsing import Parser
 
 expr = input(".>> ")
 #expr = """
