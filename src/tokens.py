@@ -54,6 +54,7 @@ Keywords = {
     'and': "parse_logical_and",
     'or': "parse_logical_or",
     'xor': "parse_logical_xor",
+    #not is handled in parse_factor separately
     'bitwiseOr': "",
     'bitwiseXor': "",
     'bitwiseAnd': "",
