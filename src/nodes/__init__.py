@@ -19,6 +19,7 @@ from .octalnumber import OctalNumber
 from .binarynumber import BinaryNumber
 from .percentage import Percentage
 from .factorial import Factorial
+from .logical_operators import LogicalAnd, LogicalOr, LogicalNot,LogicalXor
 
 __all__ = [
     'Node',
@@ -48,4 +49,8 @@ __all__ = [
     'BinaryNumber',
     'Percentage',
     'Factorial',
+    'LogicalAnd',
+    'LogicalOr',
+    'LogicalNot',
+    'LogicalXor',
 ]

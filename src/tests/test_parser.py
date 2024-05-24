@@ -18,3 +18,10 @@ print('\n\n')
 parser = Parser(tokens)
 ast = parser.parse()
 print(ast)
+
+
+""""
+
+(x = 2 or (z = 2 and y = 3))
+
+"""

@@ -152,8 +152,11 @@ class Parser:
             if self.current_token.value in Keywords:
                 parse_method = getattr(self,Keywords[self.current_token.value])
                 node = parse_method()
-            elif self.peek(1).value == '[':
+            elif self.peek(1) != None and self.peek(1).value == '[':
                 node = self.parse_matrix_assignment()
+            elif self.current_token.value == "not":
+                self.advance()
+                node = LogicalNot(right=self.parse_factor())
             else:
                 node = Symbol(self.current_token.value)
                 self.advance()
@@ -166,6 +169,24 @@ class Parser:
             node = self.parse_function_define()
 
                    
+        return self.parse_logical_or(node)
+    
+    def parse_logical_or(self, node):
+        if self.current_token != None and self.current_token.value == "or":
+            self.advance()
+            node = LogicalOr(left=node, right=self.parse_factor())
+        return self.parse_logical_xor(node)
+
+    def parse_logical_xor(self, node):
+        if self.current_token != None and self.current_token.value == 'xor':
+            self.advance()
+            node = LogicalXor(left=node, right=self.parse_factor())
+        return self.parse_logical_and(node)
+
+    def parse_logical_and(self, node):
+        if self.current_token != None and self.current_token.value == 'and':
+            self.advance()
+            node = LogicalAnd(left=node, right=self.parse_factor())
         return self.parse_power(node)
     
     def parse_power(self, node):
