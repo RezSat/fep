@@ -13,7 +13,7 @@ expr = input(".>> ")
 #"""
 tokens = Tokenizer(expr).tokenize()
 print(tokens)
-
+print({'key':1}['key'])
 print('\n\n')
 parser = Parser(tokens)
 ast = parser.parse()

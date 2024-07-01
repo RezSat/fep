@@ -1,17 +1,14 @@
-# Welcome to MkDocs
+# FEP ( Flexible Expression Parser )
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Parser made for easily handle mathematical expressions that  is closely related to mathematics than to look like a traditional programming language.
 
-## Commands
+Parser contains major components:
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+```
+- Operators
+- DataTypes
+```
 
-## Project layout
+each of these components has seperate classes and can be used to create ASTs manually as well.
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+Well you know what, I'll compelete the documentatio later after I finish the whole parser and visitor the

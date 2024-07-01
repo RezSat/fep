@@ -167,6 +167,10 @@ class Parser:
             # self.tokens.index(')', start=self.i) - self.tokens.index('=', self.i) must to 1
 
             node = self.parse_function_define()
+        
+        elif self.current_token.name == 'LBrace':
+            node = self.parse_set()
+
 
                    
         return self.parse_logical_or(node)
@@ -301,7 +305,22 @@ class Parser:
 
         return MatrixAssignment(matrix_name, value, n, m)
 
+    def parse_set(self):
+        if self.current_token.name == "LBrace":
+            self.advance()
+            elements = []
+            while self.current_token != None and self.current_token.value != '}':
+                element = self.parse_expression()
+                elements.append(element)
+                if self.current_token == None:
+                    raise SyntaxError("Missing closing '}' for set")
+                elif self.current_token.value == ',':
+                    self.advance()
+            if self.current_token == None or self.current_token.value != '}':
+                raise SyntaxError("Missing closing '}' for set")
 
+            self.advance()
+            return Set(elements)
 
             
 
