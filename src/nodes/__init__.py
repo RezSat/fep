@@ -21,6 +21,7 @@ from .percentage import Percentage
 from .factorial import Factorial
 from .logical_operators import LogicalAnd, LogicalOr, LogicalNot,LogicalXor
 from .hashmap import HashMap
+from .ds_call import DataStructureCall
 
 __all__ = [
     'Node',
@@ -55,4 +56,5 @@ __all__ = [
     'LogicalNot',
     'LogicalXor',
     'HashMap',
+    'DataStructureCall',
 ]

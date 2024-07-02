@@ -301,7 +301,9 @@ class Parser:
                 self.advance()
                 value = self.parse_expression() # this one right i think.
             else:
-                raise SyntaxError('No value specified')
+                # well, this could be handle better but for now it works, so i'll leave it like this for now.
+                return DataStructureCall(matrix_name, n)
+                #raise SyntaxError('No value specified')
 
         return MatrixAssignment(matrix_name, value, n, m)
 
