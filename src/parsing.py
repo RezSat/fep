@@ -309,6 +309,7 @@ class Parser:
         if self.current_token.name == "LBrace":
             self.advance()
             elements = []
+            hmp = False
             while self.current_token != None and self.current_token.value != '}':
                 element = self.parse_expression()
                 elements.append(element)
@@ -316,12 +317,51 @@ class Parser:
                     raise SyntaxError("Missing closing '}' for set")
                 elif self.current_token.value == ',':
                     self.advance()
-            if self.current_token == None or self.current_token.value != '}':
+                elif self.current_token.value == ':':
+                    hmp = True
+                    break
+            if hmp:
+                return self.parse_hashmap(elements)
+            elif self.current_token == None or self.current_token.value != '}':
                 raise SyntaxError("Missing closing '}' for set")
+            else:
+                self.advance()
+                return Set(elements)
+        
+    def parse_hashmap(self, elements):
+        keys = []
+        values = []
+        keys.extend(elements)
 
+        if self.current_token != None and self.current_token.value == ':':
             self.advance()
-            return Set(elements)
+            if self.current_token != None and self.current_token.value == '}':
+                raise SyntaxError("No value for key, hashmap closed unexpectedly")
+            values.append(self.parse_factor())
 
+            if self.current_token != None and self.current_token.value == ',':
+                self.advance()
+
+        print(values, keys)
+        print(self.current_token)
+        while self.current_token != None and self.current_token.value != '}':
+            keys.append(self.parse_factor())
+
+            if self.current_token.value == '}':
+                raise SyntaxError("No value for key, hashmap closed unexpectedly")
+
+            if self.current_token.value != ':':
+                raise SyntaxError("Missing ':' after key")
+            
+            self.advance()
+            
+            value = self.parse_factor()
+            values.append(value)
+            if self.current_token.value == ',':
+                self.advance()
+            print(values, keys)
+                
+        return HashMap(keys, values)
             
 
 

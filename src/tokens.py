@@ -5,7 +5,7 @@
 
 Number = r'(\d+(\.\d+)?|\.\d+)([eE][+-]?\d+)?'
 Symbol = r'[a-zA-Z_α-ωΑ-Ω\u2100-\u214F\u2200-\u22FF\u2190-\u21FF\u27C0-\u27EF\u2980-\u29FF\u2A00-\u2AFF\u2B00-\u2BFF]'
-OneOperator = r'[+\-*/^=/(\);,><!|[\]%{}]' # supported operators if any added, edit the below list as welll
+OneOperator = r'[+\-*/^=/(\);,><!|[\]%{}:]' # supported operators if any added, edit the below list as welll
 OneOperators = {
     "+": "Add",
     "-": "Subtract",
@@ -26,6 +26,7 @@ OneOperators = {
     '%': 'Percentage',
     '{': 'LBrace',
     '}': 'RBrace',
+    ':': 'Colon',
 }
 
 TwoOperator = {

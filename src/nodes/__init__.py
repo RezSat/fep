@@ -20,6 +20,7 @@ from .binarynumber import BinaryNumber
 from .percentage import Percentage
 from .factorial import Factorial
 from .logical_operators import LogicalAnd, LogicalOr, LogicalNot,LogicalXor
+from .hashmap import HashMap
 
 __all__ = [
     'Node',
@@ -53,4 +54,5 @@ __all__ = [
     'LogicalOr',
     'LogicalNot',
     'LogicalXor',
+    'HashMap',
 ]
